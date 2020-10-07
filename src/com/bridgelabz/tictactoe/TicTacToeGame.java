@@ -184,7 +184,7 @@ public class TicTacToeGame {
 			return 0;
 	}
 
-	// Both players plays until game is over
+	// UC12 Both players plays until game is over
 	public void computerPlayerBothPlay(Scanner userInput, char userLetter, char computerLetter, boolean playerTurn) {
 		boolean playerWins = false, computerWins = false;
 		int moveNumber = 1;
@@ -192,9 +192,9 @@ public class TicTacToeGame {
 			if (playerTurn) {
 				playersMakeMove(userInput, userLetter, computerLetter);
 				playerWins = getWinnerOrChangeTurn(userLetter);
-				if (!playerWins) {
+				if (!playerWins)
 					playerTurn = false;
-				} else {
+				else {
 					System.out.println("Player wins");
 					return;
 				}
@@ -210,7 +210,7 @@ public class TicTacToeGame {
 			}
 			moveNumber++;
 		}
-		System.out.println("It is tie");
+		System.out.println("Game Over!!! It is tie");
 	}
 
 	public static void main(String[] args) {
