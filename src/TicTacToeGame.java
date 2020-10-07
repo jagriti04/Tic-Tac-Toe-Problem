@@ -10,29 +10,27 @@ public class TicTacToeGame {
 		}
 	}
 	
-	//UC2 ask user to choose either X or O
-	public char chooseXorO() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter X or O:");
-		char userLetter = sc.next().charAt(0);
-		return userLetter;
-		
+	//UC2 ask user to choose either X or O for player
+	public char chooseSymbolForPlayer(char userLetter) {
+		char computerLetter = ' ';
+		if (userLetter =='X' || userLetter=='x') {
+			computerLetter = 'O';
+		} else if (userLetter =='O' || userLetter=='o') {
+			computerLetter = 'X';
+		}
+		return computerLetter;
 	}
 	
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to Tic Tac Toe game");	
 		TicTacToeGame ticTacToeGame = new TicTacToeGame();		
 		ticTacToeGame.boardCreation();
 		
-		char userLetter = ticTacToeGame.chooseXorO();
-		System.out.println("User"+userLetter);
-		char computerLetter = ' ';
-		if (userLetter =='X' || userLetter=='x') {
-			computerLetter = 'O';
-		} else {
-			computerLetter = 'X';
-		}
-		System.out.println("comp" + computerLetter);
-		
+		System.out.println("Enter X or O:");
+		char userLetter = sc.next().charAt(0);
+		char computerSymbol = ticTacToeGame.chooseSymbolForPlayer(userLetter);
+		System.out.println("User "+userLetter);
+		System.out.println("comp " + computerSymbol);
 	}
 }
