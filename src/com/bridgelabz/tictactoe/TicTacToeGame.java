@@ -38,13 +38,17 @@ public class TicTacToeGame {
 		boolean isLocationFree;
 		int boardLocation;
 		do {
-			System.out.println("Enter the location (0-9) to put symbol: ");
+			System.out.println("Enter the location (1-9) to put symbol: ");
 			boardLocation = input.nextInt();
-			if (board[boardLocation] == ' ') {
-				isLocationFree = true;
+			isLocationFree = false;
+			if (boardLocation >= 1 && boardLocation <= 9) {
+				if (board[boardLocation] == ' ') {
+					isLocationFree = true;
+				} else {
+					System.out.println("Already filled");
+				}
 			} else {
-				System.out.println("Already filled");
-				isLocationFree = false;
+				System.out.println("Invalid location");
 			}
 		} while (!isLocationFree);
 		board[boardLocation] = playerSymbol;
