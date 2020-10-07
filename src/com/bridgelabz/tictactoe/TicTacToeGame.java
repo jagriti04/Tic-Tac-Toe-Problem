@@ -93,31 +93,30 @@ public class TicTacToeGame {
 	public void computerMakesMove(char computerSymbol, char opponentSymbol) {
 		boolean isLocationFree = false;
 		int boardLocation = 1;
-		while (!isLocationFree) {
-			int positionToWin = checkIfTwoSameSymbol(computerSymbol);
-			if (positionToWin == 0) { // if computer can't win in this move
-				int positionToBlock = checkIfTwoSameSymbol(opponentSymbol);
-				if (positionToBlock == 0) { // if no need to block user
-					int checkCorners = getAvailableCorner();
-					if (checkCorners == 0) { // if corners not available
-						if (checkIfPositionFree(5)) { // if center empty take it
-							boardLocation = 5;
-						} else {
-							int[] validCells = new int[] { 2, 4, 6, 8 };
-							Random random = new Random();
-							boardLocation = validCells[random.nextInt(validCells.length)];
-						}
+		int positionToWin = checkIfTwoSameSymbol(computerSymbol);
+		if (positionToWin == 0) { 					// if computer can't win in this move
+			int positionToBlock = checkIfTwoSameSymbol(opponentSymbol);
+			if (positionToBlock == 0) { 			// if no need to block user
+				int checkCorners = getAvailableCorner();
+				if (checkCorners == 0) { 			// if corners not available
+					if (checkIfPositionFree(5)) { 	// if center empty take it
+						boardLocation = 5;
 					} else {
-						boardLocation = checkCorners;
+						int[] validCells = new int[] { 2, 4, 6, 8 };
+						Random random = new Random();
+						while (!isLocationFree) {
+							boardLocation = validCells[random.nextInt(validCells.length)];
+							isLocationFree = checkIfPositionFree(boardLocation);
+						}
 					}
 				} else {
-					boardLocation = positionToBlock;
+					boardLocation = checkCorners;
 				}
 			} else {
-				boardLocation = positionToWin;
+				boardLocation = positionToBlock;
 			}
-			isLocationFree = false;
-			isLocationFree = checkIfPositionFree(boardLocation);
+		} else {
+			boardLocation = positionToWin;
 		}
 		board[boardLocation] = computerSymbol;
 		showBoard();
