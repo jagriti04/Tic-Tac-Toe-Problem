@@ -29,6 +29,8 @@ public class TicTacToeGame {
 		char computerLetter = ' ';
 		if (userLetter =='X' || userLetter=='x') {
 			computerLetter = 'O';
+		} else {
+			computerLetter = 'X';
 		}
 		System.out.println("comp" + computerLetter);
 		
