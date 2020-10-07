@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class TicTacToeGame {
 	private char[] board = new char[10];
-	private final static int USER = 0;
-	private final static int COMPUTER = 1;
+	private final static int USER = 0; // when tossResult= 0 (HEAD), then user plays
+	private final static int COMPUTER = 1; // when tossResult= 1 (TAILS), then computer plays
 
 	// UC1 create board
 	public void boardCreation() {
@@ -74,11 +74,43 @@ public class TicTacToeGame {
 		}
 	}
 
+	// UC7 get winner or tie or change the turn
+	public boolean getWinnerTieChangeTurn(char userSymbol) {
+		boolean isWinner = false;
+
+		for (int position = 1; position <= 3; position++) {
+			if (board[position] == userSymbol && board[position + 3] == userSymbol
+					&& board[position + 6] == userSymbol) {
+				isWinner = true;
+			}
+		}
+		for (int position = 1; position <= 3; position++) {
+			if (board[position] == userSymbol && board[position + 1] == userSymbol
+					&& board[position + 2] == userSymbol) {
+				isWinner = true;
+			}
+		}
+		int position = 1;
+		if (board[position] == userSymbol && board[position + 4] == userSymbol
+				&& board[position + 8] == userSymbol) {
+			isWinner = true;
+		}
+		int position2 = 3;
+		if (board[position] == userSymbol && board[position + 2] == userSymbol
+				&& board[position + 4] == userSymbol) {
+			isWinner = true;
+		}
+		return isWinner;
+	}
+
 	public static void main(String[] args) {
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Welcome to Tic Tac Toe game");
 		TicTacToeGame ticTacToeGame = new TicTacToeGame();
 		ticTacToeGame.boardCreation();
+
+		String playsFirst = ticTacToeGame.getWhoPlaysFirst();
+		System.out.println("Plays first: " + playsFirst);
 
 		System.out.println("Enter X or O:");
 		char userLetter = userInput.next().charAt(0);
@@ -87,11 +119,12 @@ public class TicTacToeGame {
 		System.out.println("comp " + computerSymbol);
 		ticTacToeGame.showBoard();
 
-		ticTacToeGame.playersMakeMove(userInput, userLetter);
-
-		String playsFirst = ticTacToeGame.getWhoPlaysFirst();
-		System.out.println("Plays first: " + playsFirst);
-
+		boolean playWins = ticTacToeGame.getWinnerTieChangeTurn(userLetter);
+		while (!playWins) {
+			ticTacToeGame.playersMakeMove(userInput, userLetter);
+			playWins = ticTacToeGame.getWinnerTieChangeTurn(userLetter);
+		}
+		System.out.println("Player wins");
 		userInput.close();
 	}
 }
