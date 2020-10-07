@@ -74,8 +74,8 @@ public class TicTacToeGame {
 		}
 	}
 
-	// UC7 get winner or tie or change the turn
-	public boolean getWinnerTieChangeTurn(char userSymbol) {
+	// UC7 get winner or change the turn
+	public boolean getWinnerOrChangeTurn(char userSymbol) {
 		if ((board[1] == userSymbol && board[2] == userSymbol && board[3] == userSymbol)
 				|| (board[4] == userSymbol && board[5] == userSymbol && board[6] == userSymbol)
 				|| (board[7] == userSymbol && board[8] == userSymbol && board[9] == userSymbol)
@@ -89,7 +89,50 @@ public class TicTacToeGame {
 		return false;
 	}
 
+	// UC8 if computer plays
+	public void computerMakesMove(char computerSymbol) {
+		boolean isLocationFree = false;
+		int boardLocation = 1;
+		while (!isLocationFree) {
+			boardLocation = (int) ((Math.random() * 10) % 9) + 1;
+			isLocationFree = false;
+			isLocationFree = checkIfPositionFree(boardLocation);
+		}
+		board[boardLocation] = computerSymbol;
+		showBoard();
+	}
+
+	//Both players plays until game is over
+	public void computerPlayerBothPlay(Scanner userInput, char userLetter, char computerLetter, boolean playerTurn) {
+		boolean playerWins = false, computerWins = false;
+		int moveNumber = 1;
+		while (moveNumber < 10) {
+			if (playerTurn) {
+				playersMakeMove(userInput, userLetter);
+				playerWins = getWinnerOrChangeTurn(userLetter);
+				if (!playerWins) {
+					playerTurn = false;
+				} else {
+					System.out.println("Player wins");
+					return;
+				}
+			} else {
+				computerMakesMove(computerLetter);
+				computerWins = getWinnerOrChangeTurn(computerLetter);
+				if (!computerWins) {
+					playerTurn = true;
+				} else {
+					System.out.println("Computer wins");
+					return;
+				}
+			}
+			moveNumber++;
+		}
+		System.out.println("It is tie");
+	}
+
 	public static void main(String[] args) {
+		boolean playerTurn = false;
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Welcome to Tic Tac Toe game");
 		TicTacToeGame ticTacToeGame = new TicTacToeGame();
@@ -97,6 +140,9 @@ public class TicTacToeGame {
 
 		String playsFirst = ticTacToeGame.getWhoPlaysFirst();
 		System.out.println("Plays first: " + playsFirst);
+		if (playsFirst.equals("Player")) {
+			playerTurn = true;
+		}
 
 		System.out.println("Enter X or O:");
 		char userLetter = userInput.next().charAt(0);
@@ -105,12 +151,7 @@ public class TicTacToeGame {
 		System.out.println("comp " + computerSymbol);
 		ticTacToeGame.showBoard();
 
-		boolean playWins = ticTacToeGame.getWinnerTieChangeTurn(userLetter);
-		while (!playWins) {
-			ticTacToeGame.playersMakeMove(userInput, userLetter);
-			playWins = ticTacToeGame.getWinnerTieChangeTurn(userLetter);
-		}
-		System.out.println("Player wins");
+		ticTacToeGame.computerPlayerBothPlay(userInput, userLetter, computerSymbol, playerTurn);
 		userInput.close();
 	}
 }
