@@ -59,7 +59,7 @@ public class TicTacToeGame {
 		if (board[boardLocation] == ' ') {
 			return true;
 		} else {
-			System.out.println("Already filled");
+			System.out.println("Already filled. Try other location.");
 			return false;
 		}
 	}
@@ -214,26 +214,44 @@ public class TicTacToeGame {
 	}
 
 	public static void main(String[] args) {
-		boolean playerTurn = false;
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Welcome to Tic Tac Toe game");
-		TicTacToeGame ticTacToeGame = new TicTacToeGame();
-		ticTacToeGame.boardCreation();
+		boolean isPlaying = true;
 
-		String playsFirst = ticTacToeGame.getWhoPlaysFirst();
-		System.out.println("Plays first: " + playsFirst);
-		if (playsFirst.equals("Player")) {
-			playerTurn = true;
+		// UC13 user can choose to play multiple times
+		while (isPlaying) {
+			System.out.println("Enter 1 to play game \n2 to exit");
+			int userSelects = userInput.nextInt();
+			switch (userSelects) {
+			case 1:
+				TicTacToeGame ticTacToeGame = new TicTacToeGame();
+				boolean playerTurn = false;
+				ticTacToeGame.boardCreation();
+
+				String playsFirst = ticTacToeGame.getWhoPlaysFirst();
+				System.out.println("Plays first: " + playsFirst);
+				if (playsFirst.equals("Player")) {
+					playerTurn = true;
+				}
+
+				System.out.println("Choose your symbol X or O:");
+				char userLetter = userInput.next().charAt(0);
+				char computerSymbol = ticTacToeGame.chooseSymbolForPlayer(userLetter);
+				System.out.println("User " + userLetter);
+				System.out.println("comp " + computerSymbol);
+				ticTacToeGame.showBoard();
+
+				ticTacToeGame.computerPlayerBothPlay(userInput, userLetter, computerSymbol, playerTurn);
+				break;
+			case 2:
+				System.out.println("----- Closing Game -----");
+				isPlaying = false;
+				break;
+			default:
+				System.out.println("Enter 1 to play game \n2 to exit");
+				break;
+			}
 		}
-
-		System.out.println("Enter X or O:");
-		char userLetter = userInput.next().charAt(0);
-		char computerSymbol = ticTacToeGame.chooseSymbolForPlayer(userLetter);
-		System.out.println("User " + userLetter);
-		System.out.println("comp " + computerSymbol);
-		ticTacToeGame.showBoard();
-
-		ticTacToeGame.computerPlayerBothPlay(userInput, userLetter, computerSymbol, playerTurn);
 		userInput.close();
 	}
 }
