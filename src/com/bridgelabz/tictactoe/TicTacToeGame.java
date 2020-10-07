@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class TicTacToeGame {
 	private char[] board = new char[10];
-	private final static int HEAD = 0;
-	private final static int TAILS = 1;
+	private final static int USER = 0;
+	private final static int COMPUTER = 1;
 
 	// UC1 create board
 	public void boardCreation() {
@@ -62,18 +62,18 @@ public class TicTacToeGame {
 			return false;
 		}
 	}
-	
-	//UC6 decides who plays first
+
+	// UC6 decides who plays first
 	public String getWhoPlaysFirst() {
-		int tossResult = (int) (Math.random()*10)%2;
-		
-		if (tossResult == 0 ) {
+		int tossResult = (int) (Math.random() * 10) % 2;
+
+		if (tossResult == USER) {
 			return "Player";
 		} else {
 			return "Computer";
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		Scanner userInput = new Scanner(System.in);
 		System.out.println("Welcome to Tic Tac Toe game");
@@ -88,10 +88,10 @@ public class TicTacToeGame {
 		ticTacToeGame.showBoard();
 
 		ticTacToeGame.playersMakeMove(userInput, userLetter);
-		
+
 		String playsFirst = ticTacToeGame.getWhoPlaysFirst();
-		System.out.println("Plays first: "+ playsFirst); 
-		
+		System.out.println("Plays first: " + playsFirst);
+
 		userInput.close();
 	}
 }
