@@ -21,6 +21,13 @@ public class TicTacToeGame {
 		return computerLetter;
 	}
 	
+	//UC3 show the game board
+	public void showBoard() {
+		for (int position = 1; position<board.length; position++) {
+			System.out.println("Board has " + board[position] + " at " + position);
+		}
+	}
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to Tic Tac Toe game");	
@@ -32,5 +39,7 @@ public class TicTacToeGame {
 		char computerSymbol = ticTacToeGame.chooseSymbolForPlayer(userLetter);
 		System.out.println("User "+userLetter);
 		System.out.println("comp " + computerSymbol);
+		
+		ticTacToeGame.showBoard();
 	}
 }
