@@ -13,20 +13,8 @@ public class TicTacToeGame {
 	//UC2 ask user to choose either X or O
 	public char chooseXorO() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter 1 to Choose X and 2 to O:");
-		
-		int userChoose = sc.nextInt();
-		char userLetter =' ';
-		switch (userChoose) {
-				case 1: userLetter = 'X';
-					    break;
-				
-				case 2: userLetter = 'O';
-						break;
-				
-				default:
-						break;
-		}
+		System.out.println("Enter X or O:");
+		char userLetter = sc.next().charAt(0);
 		return userLetter;
 		
 	}
@@ -37,6 +25,12 @@ public class TicTacToeGame {
 		ticTacToeGame.boardCreation();
 		
 		char userLetter = ticTacToeGame.chooseXorO();
-		System.out.println(userLetter);
+		System.out.println("User"+userLetter);
+		char computerLetter = ' ';
+		if (userLetter =='X' || userLetter=='x') {
+			computerLetter = 'O';
+		}
+		System.out.println("comp" + computerLetter);
+		
 	}
 }
