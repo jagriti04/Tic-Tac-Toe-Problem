@@ -77,27 +77,29 @@ public class TicTacToeGame {
 	// UC7 get winner or tie or change the turn
 	public boolean getWinnerTieChangeTurn(char userSymbol) {
 		boolean isWinner = false;
-
+		int diagonalPos1 = 1, diagonalPos2 = 3;
+		// checks vertical matching
 		for (int position = 1; position <= 3; position++) {
 			if (board[position] == userSymbol && board[position + 3] == userSymbol
 					&& board[position + 6] == userSymbol) {
 				isWinner = true;
+				return isWinner;
 			}
 		}
+		// checks horizontal matching
 		for (int position = 1; position <= 3; position++) {
 			if (board[position] == userSymbol && board[position + 1] == userSymbol
 					&& board[position + 2] == userSymbol) {
 				isWinner = true;
+				return isWinner;
 			}
 		}
-		int position = 1;
-		if (board[position] == userSymbol && board[position + 4] == userSymbol
-				&& board[position + 8] == userSymbol) {
+		//checks diagonal 1 and diagonal 2
+		if (board[diagonalPos1] == userSymbol && board[diagonalPos1 + 4] == userSymbol
+				&& board[diagonalPos1 + 8] == userSymbol) {
 			isWinner = true;
-		}
-		int position2 = 3;
-		if (board[position] == userSymbol && board[position + 2] == userSymbol
-				&& board[position + 4] == userSymbol) {
+		} else if (board[diagonalPos2] == userSymbol && board[diagonalPos2 + 2] == userSymbol
+				&& board[diagonalPos2 + 4] == userSymbol) {
 			isWinner = true;
 		}
 		return isWinner;
